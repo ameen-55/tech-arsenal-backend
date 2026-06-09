@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import requests
 import time
+import os  # المكتبة المسؤولة عن قراءة متغيرات البيئة بأمان
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +15,8 @@ global_cache = {
 
 CACHE_DURATION = 20  # تحديث كل 20 ثانية لتوفير الباقة
 
-API_TOKEN = "00058430fc1a429ea6f2c612c3985cc8"
+# 🔐 قراءة المفتاح سرياً من خوادم Render مباشرة بناءً على الاسم الذي اخترته
+API_TOKEN = os.getenv("FOOTBALL_API_TOKEN")
 URL = "https://api.football-data.org/v4/matches"
 
 @app.route('/api/live-scores', methods=['GET'])
