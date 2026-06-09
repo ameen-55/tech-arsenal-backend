@@ -26,13 +26,16 @@ def get_live_scores():
     if global_cache["data"] is None or (current_time - global_cache["last_updated"]) > CACHE_DURATION:
         try:
             headers = {"X-Auth-Token": API_TOKEN}
-            params = {"status": "LIVE"} 
+            
+            # ✨ التعديل السحري هنا: قمنا بإزالة {"status": "LIVE"} لجلب كل مباريات اليوم (القادمة، الجارية، والمنتهية)
+            params = {} 
+            
             response = requests.get(URL, headers=headers, params=params, timeout=5)
             
             if response.status_code == 200:
                 global_cache["data"] = response.json().get("matches", [])
                 global_cache["last_updated"] = current_time
-                print("🔄 [Global Cache] تم تحديث داتا الدوريات الأوروبية وكأس العالم!")
+                print("🔄 [Global Cache] تم تحديث داتا جميع مباريات اليوم الأوروبية والعالمية!")
         except Exception as e:
             print(f"⚠️ خطأ: {e}")
             
